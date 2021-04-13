@@ -1,7 +1,12 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
 }
 
 /* body {
@@ -11,44 +16,52 @@
     z-index: 2;
 } */
 
+/* .container-fluid.back.p-0 {
+  background-image: url(img/Pokemon-Gen-6.jpeg);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+} */
+
 #content .border {
-    border-color: #000000 !important;
+  border-color: #000000 !important;
 }
 
 .bg {
-    background-color: #000;
-    z-index: 1;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: .2;
+  background-color: #000;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.2;
 }
 
 .poke {
-    margin: 3px;
+  margin: 3px;
 }
 
 .poke:hover {
-    transform: scale3d(1.1, 1.1, 1.1);
-    transition: 0.2s;
-    background-color: #fcf7e3;
+  transform: scale3d(1.1, 1.1, 1.1);
+  transition: 0.2s;
+  background-color: #fcf7e3;
 }
 
 .pokeFocus {
-    transform: scale3d(1.1, 1.1, 1.1);
-    background-color: #fff9df;
+  transform: scale3d(1.1, 1.1, 1.1);
+  background-color: #fff9df;
 }
 
-.point{
-    height: 50px;
-    background-color: rgb(233, 233, 233);
-    margin-top: 200px;
-    border: solid rgb(121, 121, 121) 1px;
-    text-align: center;
-    padding-top: 10px;
-    font-size: larger;
-    color: red;
-    font-weight: bold;
+.point {
+  height: 50px;
+  background-color: rgb(233, 233, 233);
+  margin-top: 200px;
+  border: solid rgb(121, 121, 121) 1px;
+  text-align: center;
+  padding-top: 10px;
+  font-size: larger;
+  color: red;
+  font-weight: bold;
 }

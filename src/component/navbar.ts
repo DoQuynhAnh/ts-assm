@@ -1,4 +1,3 @@
-import { $ } from '../ultil'
 const Navbar = {
     async render() {
         const userName = localStorage.getItem('user');
@@ -16,10 +15,10 @@ const Navbar = {
                                         Hướng Dẫn
                                     </button>
                               </li>
-                              <li class="nav-item" style="margin-left: 10px">
+                              <li class="nav-item pl-2">
                                     <button class="btn btn-success restart">Chơi Lại</button>
                               </li>
-                              <li class="nav-item" style="margin-left: 10px">
+                              <li class="nav-item pl-2">
                                     <button class="btn btn-danger logout">Đăng Xuất</button>
                               </li>
                             </ul>

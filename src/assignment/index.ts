@@ -4,7 +4,7 @@ import swal from "sweetalert";
 
 export default class assignment {
   async render() {
-    let result: string = "";
+    let listImg: string = "";
 
     const pokemons: number = 10;
 
@@ -31,7 +31,7 @@ export default class assignment {
     });
 
     cardPokemon.map((item: any, index: number) => {
-      result += `<img src="${item.image}" id="${item.id}" index="${index}" class="poke border" height="150px">`;
+      listImg += `<img src="${item.image}" id="${item.id}" index="${index}" class="poke border" height="150px">`;
     });
 
     $("#navbar").innerHTML = await Navbar.render();
@@ -39,15 +39,14 @@ export default class assignment {
     $(".point").innerHTML = "Điểm: 0";
 
     return `
-            ${result}
+            ${listImg}
         `;
   }
 
   async afterRender() {
     let focusPokemon: HTMLElement[] = [];
-    let count: number = 0;
     let totalPoint: number = 0;
-    let countDuplicatePokemon: number = 0;
+    let countToEnd: number = 0;
     const userName: string = localStorage.getItem("user");
     const poke: HTMLElement[] = $(".poke");
 
@@ -56,10 +55,8 @@ export default class assignment {
       item.addEventListener("click", () => {
         item.classList.add("pokeFocus");
         focusPokemon = [...focusPokemon, item];
-        count++;
 
-        if (count >= 2) {
-          count = 0;
+        if (focusPokemon.length === 2) {
 
           if (
             focusPokemon[0].getAttribute("id") ==
@@ -71,7 +68,7 @@ export default class assignment {
               item.style.visibility = "hidden";
             });
             totalPoint += 100;
-            countDuplicatePokemon += 1;
+            countToEnd += 1;
           } else {
             focusPokemon.forEach((item) => {
               item.classList.remove("pokeFocus"); 
@@ -86,20 +83,33 @@ export default class assignment {
           $(".point").innerHTML = "Điểm: " + totalPoint;
         }
 
-        if (countDuplicatePokemon === 10) {
+        if (countToEnd === 10) {
           swal(
             "Chúc mừng!",
             `${userName} đã dành chiến thắng với số điểm là: ${totalPoint}`
           );
+
+          swal({
+            title: "Bạn có muốn chơi lại",
+            text: "Click outside to cancel",
+            icon: "warning",
+            dangerMode: false,
+          }).then(async (willDelete: boolean) => {
+            if (willDelete) {
+              swal("Chơi lại thành công", {
+                icon: "success",
+              });
+              reRender(Assignment, "#content");
+            } else {
+              swal("Bạn đã hủy!");
+            }
+          });
+
         }
       });
     });
 
-  //   const getCoordinates = (elem) => {
-  //     var LeftPos = elem.offsetLeft;
-  //     var TopPos = elem.offsetTop;
-  //     return {X:LeftPos,Y:TopPos};
-  // }
+
 
     // play again
     const Assignment = new assignment();
@@ -130,4 +140,31 @@ export default class assignment {
       window.location.hash = "";
     });
   }
+
+  // const showStroke = (value) => {
+
+  //   var c = document.getElementById("myCanvas");
+  //   var ctx = c.getContext("2d");
+  //   ctx.moveTo(49, 90);
+  //   ctx.lineTo(350, 634);
+  //   ctx.stroke();
+
+  //   c.classList.add("custom")
+
+  //   setTimeout(() => {
+  //     c.classList.remove("custom")
+  //   }, 3000)
+
+  // }
+
+
+
+
+  // const findPos = (element) => {
+  //   var rect = element.getBoundingClientRect();
+  //   console.log("top: " ,rect.top,"right: " , rect.right,"bottom: " , rect.bottom,"left: " , rect.left);
+  //   let hypotenuse = Math.sqrt(Math.pow((rect.height), 2) + Math.pow((rect.width), 2))
+  //   console.log(rect);
+  //   console.log(hypotenuse);
+  // }
 }
