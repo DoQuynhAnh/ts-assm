@@ -15,11 +15,11 @@ const Navbar = {
                                         Hướng Dẫn
                                     </button>
                               </li>
-                              <li class="nav-item pl-2">
-                                    <button class="btn btn-success restart">Chơi Lại</button>
+                              <li class="nav-item ">
+                                    <button class=" btn btn-success restart">Chơi Lại</button>
                               </li>
-                              <li class="nav-item pl-2">
-                                    <button class="btn btn-danger logout">Đăng Xuất</button>
+                              <li class="nav-item">
+                                    <button class=" btn btn-danger logout">Đăng Xuất</button>
                               </li>
                             </ul>
                           </div>

@@ -30,17 +30,28 @@ export default class assignment {
       return Math.random() - 0.5;
     });
 
-    cardPokemon.map((item: any, index: number) => {
-      listImg += `<img src="${item.image}" id="${item.id}" index="${index}" class="poke border" height="150px">`;
+    cardPokemon.forEach((item: any, index: number) => {
+      listImg += `
+      <div class=" col-3 mb-3" >
+        <article class="flashcard" id="flashcard_${index}" >
+          <input type="checkbox" id="idInput_${index}" data-focus="${item.id}" index="${index}" checked class="pokeEle"/>
+          <label for="idInput_${index}">
+            <section class="front">
+            <img src="../../img/box.png" height="150px">
+            </section>
+            <section class="back">
+            <img src="${item.image}" height="150px">
+            </section>
+          </label>
+        </article>
+      </div>
+      `;
     });
 
     $("#navbar").innerHTML = await Navbar.render();
-    $(".point").style.display = "";
     $(".point").innerHTML = "Điểm: 0";
 
-    return `
-            ${listImg}
-        `;
+    return `${listImg}`;
   }
 
   async afterRender() {
@@ -48,37 +59,55 @@ export default class assignment {
     let totalPoint: number = 0;
     let countToEnd: number = 0;
     const userName: string = localStorage.getItem("user");
-    const poke: HTMLElement[] = $(".poke");
+    const pokeList: HTMLInputElement[] = $(".pokeEle");
+
+    setTimeout(() => {
+      for (let i = 0; i < pokeList.length; i++) {
+        $(`#flashcard_${i} .pokeEle`).checked = false;
+      }
+      swal("Trò chơi bắt đầu");
+    }, 2000);
 
     // Play Game
-    poke.forEach((item: HTMLElement) => {
+
+    pokeList.forEach((item: HTMLInputElement) => {
       item.addEventListener("click", () => {
-        item.classList.add("pokeFocus");
         focusPokemon = [...focusPokemon, item];
 
         if (focusPokemon.length === 2) {
-
           if (
-            focusPokemon[0].getAttribute("id") ==
-              focusPokemon[1].getAttribute("id") &&
+            focusPokemon[0].getAttribute("data-focus") ==
+              focusPokemon[1].getAttribute("data-focus") &&
             focusPokemon[0].getAttribute("index") !=
               focusPokemon[1].getAttribute("index")
           ) {
-            focusPokemon.forEach((item: HTMLElement) => {
-              item.style.visibility = "hidden";
+            focusPokemon.map((ele: HTMLInputElement) => {
+              setTimeout(() => {
+                $(`#flashcard_${ele.getAttribute("index")}`).style.display =
+                  "none";
+              }, 1500);
             });
+
             totalPoint += 100;
             countToEnd += 1;
           } else {
-            focusPokemon.forEach((item) => {
-              item.classList.remove("pokeFocus"); 
+            focusPokemon.map((ele: HTMLInputElement) => {
+              const isCheched = $(`#${ele.id}`);
+              $(`#flashcard_${ele.getAttribute("index")}`);
+              isCheched.parentNode.classList.add("bounce");
+              console.log();
+
+              setTimeout(() => {
+                isCheched.parentNode.classList.remove("bounce");
+                isCheched.checked = false;
+              }, 1300);
             });
             if (totalPoint > 0) {
-              totalPoint -= 50; 
+              totalPoint -= 50;
             }
           }
 
-          focusPokemon = []; 
+          focusPokemon = [];
 
           $(".point").innerHTML = "Điểm: " + totalPoint;
         }
@@ -104,12 +133,9 @@ export default class assignment {
               swal("Bạn đã hủy!");
             }
           });
-
         }
       });
     });
-
-
 
     // play again
     const Assignment = new assignment();
@@ -135,7 +161,7 @@ export default class assignment {
     // Đăng xuất game
     const logoutBtn: HTMLElement = $("#navbar .logout");
     logoutBtn.addEventListener("click", async function () {
-      localStorage.removeItem("user"); 
+      localStorage.removeItem("user");
       $("#navbar").innerHTML = "";
       window.location.hash = "";
     });
@@ -156,9 +182,6 @@ export default class assignment {
   //   }, 3000)
 
   // }
-
-
-
 
   // const findPos = (element) => {
   //   var rect = element.getBoundingClientRect();
